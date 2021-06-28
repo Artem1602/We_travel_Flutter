@@ -70,31 +70,28 @@ class ProfilePage extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        width: double.infinity,
-                        child: Card(
-                            margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              child: Column(
-                                children: [
-                                  Text("About me",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.blueGrey,
-                                      )),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    accountModel.userInfo,
+                      Card(
+                          margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
+                            child: Column(
+                              children: [
+                                Text("About me",
                                     style: TextStyle(
-                                      color: Colors.black54,
-                                    ),
+                                      fontSize: 20,
+                                      color: Colors.blueGrey,
+                                    )),
+                                SizedBox(height: 10),
+                                Text(
+                                  accountModel.userInfo,
+                                  style: TextStyle(
+                                    color: Colors.black54,
                                   ),
-                                ],
-                              ),
-                            )),
-                      ),
+                                ),
+                              ],
+                            ),
+                          )),
                     ],
                   ),
                 ));

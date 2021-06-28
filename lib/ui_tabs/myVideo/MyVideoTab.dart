@@ -1,12 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:we_travel/model/UserVideoTabModel.dart';
-import 'package:we_travel/model/WeTravelModel.dart';
 
 class MyVideoTab extends StatelessWidget {
   final List<String> list = [];
@@ -21,7 +19,7 @@ class MyVideoTab extends StatelessWidget {
               UserVideoTabModel inModel) {
             return Expanded(
                 child: ListView.builder(
-                  itemExtent: 80,
+              itemExtent: 100,
               itemCount: userVideoTabModel.userVideo.length,
               itemBuilder: (context, index) {
                 return userVideoTabModel.userVideo[index];
@@ -42,6 +40,13 @@ class MyVideoTab extends StatelessWidget {
               userVideoTabModel
                   .addVideoListItem(buildListItem("fileRef.name", value))
             });
+    VideoThumbnail.thumbnailData(
+            video:
+                "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+            imageFormat: ImageFormat.JPEG,
+            quality: 20)
+        .then((value) =>
+            {userVideoTabModel.addVideoListItem(buildListItem("assd", value))});
 
     // firebase_storage.FirebaseStorage.instance
     //     .ref(weTravelModel.userID)
@@ -63,19 +68,27 @@ class MyVideoTab extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          //TODO handle click
-           },
+          print(videoName);
+        },
         child: Row(
           children: [
             Expanded(
               flex: 30,
-              child: Image.memory(img),
+              child: Column(
+                children: [
+                  Expanded(
+                      child: Image.memory(
+                    img,
+                    fit: BoxFit.fill,
+                  ))
+                ],
+              ),
             ),
             Expanded(
                 flex: 70,
                 child: Column(
                   children: [
-                    Expanded(flex: 50, child: Text(videoName)),
+                    Expanded(flex: 50, child: Center(child: Text(videoName))),
                     Expanded(flex: 50, child: Text("Info")),
                   ],
                 )),
