@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,7 +12,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   preLoadUserID() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    String uId = preferences.getString("user_id");
+    String? uId = preferences.getString("user_id");
     if (uId != null) {
       weTravelModel.userID = uId;
     }

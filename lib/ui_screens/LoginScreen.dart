@@ -16,6 +16,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
+      onRecoverPassword: recoverPassword,
       title: "WeTravel",
       onLogin: (loginData) {
         return login(loginData);
@@ -28,14 +29,14 @@ class LoginScreen extends StatelessWidget {
   }
 
   //TODO Check password or email
-  Future<String> login(LoginData loginData) async {
-    Map<String, User> users = await firebaseApi.getAllUsers();
+  Future<String?> login(LoginData loginData) async {
+    Map<String, User> users = await firebaseApi!.getAllUsers();
     for (User user in users.values) {
       if (user.email == loginData.name) {
         if (user.password == loginData.password) {
           String id = users.keys.firstWhere((element) =>
-              users[element].password == loginData.password &&
-              users[element].email == loginData.name);
+              users[element]!.password == loginData.password &&
+              users[element]!.email == loginData.name);
           weTravelModel.userID = id;
           insertSharedPrefs(id);
           return null;
@@ -48,9 +49,9 @@ class LoginScreen extends StatelessWidget {
   }
 
   //TODO onError
-  Future<String> signUp(LoginData loginData) async {
+  Future<String?> signUp(LoginData loginData) async {
     var uId = Uuid().v4();
-    await firebaseApi.createNewUser(uId, User(loginData.name, loginData.password));
+    await firebaseApi!.createNewUser(uId, User(loginData.name, loginData.password));
     insertSharedPrefs(uId);
     return null;
   }
@@ -58,5 +59,8 @@ class LoginScreen extends StatelessWidget {
   Future insertSharedPrefs(String uId) async {
     var prefs = await SharedPreferences.getInstance();
     prefs.setString("user_id", uId);
+  }
+
+  Future<String?>? recoverPassword(String p1) {
   }
 }

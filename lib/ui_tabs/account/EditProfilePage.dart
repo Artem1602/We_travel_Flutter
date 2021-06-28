@@ -20,7 +20,7 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _userNameController.text = accountModel.userName;
+    _userNameController.text = accountModel.userName!;
     _userStatusController.text = accountModel.userStatus;
     _userInfoController.text = accountModel.userInfo;
 
@@ -154,7 +154,7 @@ class EditProfilePage extends StatelessWidget {
         _userStatusController.text != accountModel.userStatus) {
       accountModel.initData(_userNameController.text,
           _userStatusController.text, _userInfoController.text);
-      FireBaseAPI.create()
+      FireBaseAPI.create()!
           .createNewUserData(
               weTravelModel.userID,
               UserData(_userNameController.text, _userInfoController.text,
@@ -174,7 +174,7 @@ class EditProfilePage extends StatelessWidget {
     Firebase.initializeApp();
     File newUserImg = File(await ImagePicker()
         .getImage(source: ImageSource.gallery)
-        .then((value) => value.path));
+        .then((value) => value!.path));
     accountModel.setUserImg(CircleAvatar(
       backgroundImage: Image.file(newUserImg).image,
       radius: 45,

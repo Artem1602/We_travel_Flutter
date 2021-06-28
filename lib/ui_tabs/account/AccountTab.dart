@@ -22,7 +22,7 @@ class AccountTab extends StatelessWidget {
     return ScopedModel<AccountModel>(
       model: accountModel,
       child: ScopedModelDescendant(builder:
-          (BuildContext inContext, Widget inChild, AccountModel inModel) {
+          (BuildContext inContext, Widget? inChild, AccountModel inModel) {
         return WillPopScope(
             child: IndexedStack(
               index: accountModel.stackIndex,
@@ -59,8 +59,7 @@ class AccountTab extends StatelessWidget {
       List dataParts = allUserData.split("|=====|");
       accountModel.initData(dataParts[0], dataParts[1], dataParts[2]);
     } else {
-      UserData userData =
-          await FireBaseAPI.create().getUserData(weTravelModel.userID);
+      UserData userData = await FireBaseAPI.create()!.getUserData(weTravelModel.userID);
       accountModel.initData(
           userData.userName, userData.status, userData.userInfo);
       userDataFile.writeAsString(userData.userName +
@@ -85,7 +84,7 @@ class AccountTab extends StatelessWidget {
           .ref(weTravelModel.userID)
           .child("profile_img")
           .getDownloadURL();
-      final http.Response responseData = await http.get(imgUrl);
+      final http.Response responseData = await http.get(Uri.parse(imgUrl));
       var byteList = responseData.bodyBytes;
       var buffer = byteList.buffer;
       File userImg = await File(weTravelModel.docsDir.path + "/profile_img")

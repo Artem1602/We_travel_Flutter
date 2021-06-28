@@ -13,7 +13,7 @@ class ProfilePage extends StatelessWidget {
     return ScopedModel<AccountModel>(
         model: accountModel,
         child: ScopedModelDescendant<AccountModel>(
-          builder: (BuildContext inContext, Widget child,
+          builder: (BuildContext inContext, Widget? child,
               AccountModel accountModel) {
             return Scaffold(
                 floatingActionButton: AnimatedOpacity(
@@ -53,7 +53,7 @@ class ProfilePage extends StatelessWidget {
                         height: 60,
                       ),
                       Text(
-                        accountModel.userName,
+                        accountModel.userName!,
                         style: TextStyle(
                             fontSize: 20,
                             color: Colors.blueGrey,

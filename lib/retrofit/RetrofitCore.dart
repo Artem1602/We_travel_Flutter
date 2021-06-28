@@ -14,9 +14,9 @@ abstract class FireBaseAPI {
   factory FireBaseAPI(Dio dio, {String baseUrl}) = _FireBaseAPI;
 
   static Dio _dio = Dio();
-  static FireBaseAPI fireBaseAPI;
+  static FireBaseAPI? fireBaseAPI;
 
-  static FireBaseAPI create(){
+  static FireBaseAPI? create(){
     if(fireBaseAPI == null) {
       fireBaseAPI = FireBaseAPI(_dio);
     }
@@ -41,7 +41,7 @@ abstract class FireBaseAPI {
   Future<UserData> getUserData(@Path() id);
 
   @PUT("user_data/{id}.json")
-  Future<UserData> createNewUserData(@Path() String id, @Body() UserData userData);
+  Future<UserData> createNewUserData(@Path() String? id, @Body() UserData userData);
 }
 //TODO
 //flutter pub run build_runner build

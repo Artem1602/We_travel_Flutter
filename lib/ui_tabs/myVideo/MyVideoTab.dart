@@ -15,7 +15,7 @@ class MyVideoTab extends StatelessWidget {
     return ScopedModel<UserVideoTabModel>(
         model: userVideoTabModel,
         child: ScopedModelDescendant(
-          builder: (BuildContext inContext, Widget inChild,
+          builder: (BuildContext inContext, Widget? inChild,
               UserVideoTabModel inModel) {
             return Expanded(
                 child: ListView.builder(
@@ -38,7 +38,7 @@ class MyVideoTab extends StatelessWidget {
             quality: 20)
         .then((value) => {
               userVideoTabModel
-                  .addVideoListItem(buildListItem("fileRef.name", value))
+                  .addVideoListItem(buildListItem("fileRef.name", value!))
             });
     VideoThumbnail.thumbnailData(
             video:
@@ -46,7 +46,7 @@ class MyVideoTab extends StatelessWidget {
             imageFormat: ImageFormat.JPEG,
             quality: 20)
         .then((value) =>
-            {userVideoTabModel.addVideoListItem(buildListItem("assd", value))});
+            {userVideoTabModel.addVideoListItem(buildListItem("assd", value!))});
 
     // firebase_storage.FirebaseStorage.instance
     //     .ref(weTravelModel.userID)

@@ -6,9 +6,9 @@ import 'package:scoped_model/scoped_model.dart';
 final WeTravelModel weTravelModel = new WeTravelModel();
 
 class WeTravelModel extends Model {
-  BuildContext rootBuildContext;
-  String userID;
-  Directory docsDir;
+  late BuildContext rootBuildContext;
+  late Directory docsDir;
+  String? userID;
   bool isHideAppBar = false;
   bool isKeyboardShow = false;
 

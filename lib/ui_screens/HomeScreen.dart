@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
     return ScopedModel<WeTravelModel>(
         model: weTravelModel,
         child: ScopedModelDescendant<WeTravelModel>(builder:
-            (BuildContext inContext, Widget child, WeTravelModel accountModel) {
+            (BuildContext inContext, Widget? child, WeTravelModel accountModel) {
           return DefaultTabController(
               length: tabCount,
               child: Scaffold(
