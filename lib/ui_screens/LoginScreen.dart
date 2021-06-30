@@ -8,6 +8,8 @@ import 'package:we_travel/model/WeTravelModel.dart';
 import 'package:we_travel/retrofit/RetrofitCore.dart';
 import 'package:we_travel/retrofit/objects/User.dart';
 
+import '../utils.dart';
+
 Logger logger = Logger();
 
 class LoginScreen extends StatelessWidget {
@@ -23,7 +25,7 @@ class LoginScreen extends StatelessWidget {
       },
       onSignup: signUp,
       onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacementNamed("/HomeScreen");
+        Navigator.of(context).pushReplacementNamed(AvailableRoutes().homeScreen);
       },
     );
   }

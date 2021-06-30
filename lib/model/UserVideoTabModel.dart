@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:we_travel/model/WeTravelModel.dart';
 
-final UserVideoTabModel userVideoTabModel =
-    new UserVideoTabModel(weTravelModel);
+final UserVideoTabModel userVideoTabModel = UserVideoTabModel(weTravelModel);
 
-class UserVideoTabModel extends WeTravelModel {
+class UserVideoTabModel extends Model {
   WeTravelModel weTravelModel;
 
   List<Widget> userVideo = [];

@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:we_travel/ui_screens/HomeScreen.dart';
 import 'package:we_travel/ui_screens/LoginScreen.dart';
 import 'package:we_travel/ui_screens/SettingsScreen.dart';
+import 'package:we_travel/ui_screens/VideoScreen.dart';
+import 'package:we_travel/utils.dart';
 
 import 'model/WeTravelModel.dart';
 
@@ -29,9 +31,10 @@ class WeTravelApp extends StatelessWidget {
     return MaterialApp(
         initialRoute: "/",
         routes: {
-          "/HomeScreen": (screenContext) => HomeScreen(),
-          "/LoginScreen": (screenContext) => LoginScreen(),
-          "/SettingsScreen": (screenContext) => SettingsScreen(),
+          AvailableRoutes().homeScreen: (screenContext) => HomeScreen(),
+          AvailableRoutes().loginScreen: (screenContext) => LoginScreen(),
+          AvailableRoutes().settingsScreen: (screenContext) => SettingsScreen(),
+          AvailableRoutes().videoScreen: (screenContext) => VideoScreen()
         },
         home: selectHome(context));
   }

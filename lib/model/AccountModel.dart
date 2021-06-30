@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:we_travel/model/WeTravelModel.dart';
 
 final AccountModel accountModel = AccountModel(weTravelModel);
 
-class AccountModel extends WeTravelModel {
-  WeTravelModel weTravelModel;
+class AccountModel extends Model {
+  final WeTravelModel weTravelModel;
 
   AccountModel(this.weTravelModel);
 

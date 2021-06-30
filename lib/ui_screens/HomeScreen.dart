@@ -5,6 +5,7 @@ import 'package:we_travel/model/WeTravelModel.dart';
 
 import '../ui_tabs/account/AccountTab.dart';
 import '../ui_tabs/myVideo/MyVideoTab.dart';
+import '../utils.dart';
 
 class HomeScreen extends StatelessWidget {
   final int tabCount = 2;
@@ -34,7 +35,7 @@ class HomeScreen extends StatelessWidget {
         IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              Navigator.of(context).pushNamed("/SettingsScreen");
+              Navigator.of(context).pushNamed(AvailableRoutes().settingsScreen);
             })
       ],
       bottom: TabBar(

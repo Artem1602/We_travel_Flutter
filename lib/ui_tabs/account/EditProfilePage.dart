@@ -20,7 +20,7 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _userNameController.text = accountModel.userName!;
+    _userNameController.text = accountModel.userName;
     _userStatusController.text = accountModel.userStatus;
     _userInfoController.text = accountModel.userInfo;
 

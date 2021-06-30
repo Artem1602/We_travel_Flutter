@@ -53,7 +53,6 @@ class AccountTab extends StatelessWidget {
   }
 
   loadOrSetUserData(bool userDataExist, File userDataFile) async {
-    logger.i("userData " + userDataExist.toString());
     if (userDataExist) {
       String allUserData = await userDataFile.readAsString();
       List dataParts = allUserData.split("|=====|");

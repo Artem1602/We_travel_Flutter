@@ -5,13 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:we_travel/model/UserVideoTabModel.dart';
+import 'package:we_travel/model/WeTravelModel.dart';
+
+import '../../utils.dart';
 
 class MyVideoTab extends StatelessWidget {
   final List<String> list = [];
 
   @override
   Widget build(BuildContext context) {
-    loadUserVideos();
+    loadUserVideos(context);
     return ScopedModel<UserVideoTabModel>(
         model: userVideoTabModel,
         child: ScopedModelDescendant(
@@ -29,7 +32,7 @@ class MyVideoTab extends StatelessWidget {
         ));
   }
 
-  void loadUserVideos() {
+  void loadUserVideos(BuildContext context) {
     //TODO Test
     VideoThumbnail.thumbnailData(
             video:
@@ -38,7 +41,7 @@ class MyVideoTab extends StatelessWidget {
             quality: 20)
         .then((value) => {
               userVideoTabModel
-                  .addVideoListItem(buildListItem("fileRef.name", value!))
+                  .addVideoListItem(buildListItem("fileRef.name", value!, "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4" ,context))
             });
     VideoThumbnail.thumbnailData(
             video:
@@ -46,7 +49,7 @@ class MyVideoTab extends StatelessWidget {
             imageFormat: ImageFormat.JPEG,
             quality: 20)
         .then((value) =>
-            {userVideoTabModel.addVideoListItem(buildListItem("assd", value!))});
+            {userVideoTabModel.addVideoListItem(buildListItem("assd", value!, "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",context))});
 
     // firebase_storage.FirebaseStorage.instance
     //     .ref(weTravelModel.userID)
@@ -54,21 +57,21 @@ class MyVideoTab extends StatelessWidget {
     //     .then((value) {
     //   for (var fileRef in value.items) {
     //     if (fileRef.name == "profile_img") continue;
-    //     fileRef.getDownloadURL().asStream().listen((event) {
+    //     fileRef.getDownloadURL().asStream().listen((downloadURL) {
     //       VideoThumbnail.thumbnailData(
-    //               video: event, imageFormat: ImageFormat.JPEG, quality: 20)
+    //               video: downloadURL, imageFormat: ImageFormat.JPEG, quality: 20)
     //           .then((value) => userVideoTabModel
-    //               .addVideoListItem(buildListItem(fileRef.name, value)));
+    //               .addVideoListItem(buildListItem(fileRef.name, value!,downloadURL,context)));
     //     });
     //   }
     // });
   }
 
-  Widget buildListItem(String videoName, Uint8List img) {
+  Widget buildListItem(String videoName, Uint8List img, String downloadURL, BuildContext context,) {
     return Card(
       child: InkWell(
         onTap: () {
-          print(videoName);
+          Navigator.pushNamed(context,AvailableRoutes().videoScreen,arguments: VideoArguments(videoName,img, weTravelModel.userID!,downloadURL));
         },
         child: Row(
           children: [

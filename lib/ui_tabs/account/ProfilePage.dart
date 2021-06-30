@@ -53,7 +53,7 @@ class ProfilePage extends StatelessWidget {
                         height: 60,
                       ),
                       Text(
-                        accountModel.userName!,
+                        accountModel.userName,
                         style: TextStyle(
                             fontSize: 20,
                             color: Colors.blueGrey,
