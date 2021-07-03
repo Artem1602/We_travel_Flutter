@@ -6,7 +6,7 @@ import 'package:we_travel/model/WeTravelModel.dart';
 final AccountModel accountModel = AccountModel(weTravelModel);
 
 class AccountModel extends Model {
-  final WeTravelModel weTravelModel;
+  WeTravelModel weTravelModel;
 
   AccountModel(this.weTravelModel);
 
