@@ -19,11 +19,14 @@ class AvailableRoutes {
   AvailableRoutes._internal();
 }
 
-class VideoArguments{
+class Video{
   final String videoName;
   final Uint8List videoPreview;
   final String uId;
   final String getDownloadURL;
+  final String uploadingTime;
+  final String position;
 
-  VideoArguments(this.videoName, this.videoPreview, this.uId, this.getDownloadURL);
+
+  Video(this.videoName, this.videoPreview, this.uId, this.getDownloadURL, this.uploadingTime, this.position);
 }

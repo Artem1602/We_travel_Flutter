@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -32,46 +33,67 @@ class MyVideoTab extends StatelessWidget {
         ));
   }
 
-  void loadUserVideos(BuildContext context) {
-    //TODO Test
-    VideoThumbnail.thumbnailData(
-            video:
-                "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
-            imageFormat: ImageFormat.JPEG,
-            quality: 20)
-        .then((value) => {
-              userVideoTabModel
-                  .addVideoListItem(buildListItem("fileRef.name", value!, "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4" ,context))
-            });
-    VideoThumbnail.thumbnailData(
-            video:
-                "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
-            imageFormat: ImageFormat.JPEG,
-            quality: 20)
-        .then((value) =>
-            {userVideoTabModel.addVideoListItem(buildListItem("assd", value!, "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",context))});
+  void loadUserVideos(BuildContext context) async {
+    var img = await VideoThumbnail.thumbnailData(
+        video:
+            "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+        imageFormat: ImageFormat.JPEG,
+        quality: 20);
+    userVideoTabModel.addVideoListItem(buildListItem(
+        "ONE",
+        weTravelModel.userID!,
+        "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+        "10.02.2001",
+        "313/59",
+        img!,
+        context));
+    userVideoTabModel.addVideoListItem(buildListItem(
+        "TWO",
+        weTravelModel.userID!,
+        "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+        "10.02.2001",
+        "313/59",
+        img,
+        context));
 
-    // firebase_storage.FirebaseStorage.instance
-    //     .ref(weTravelModel.userID)
-    //     .listAll()
-    //     .then((value) {
-    //   for (var fileRef in value.items) {
-    //     if (fileRef.name == "profile_img") continue;
-    //     fileRef.getDownloadURL().asStream().listen((downloadURL) {
-    //       VideoThumbnail.thumbnailData(
-    //               video: downloadURL, imageFormat: ImageFormat.JPEG, quality: 20)
-    //           .then((value) => userVideoTabModel
-    //               .addVideoListItem(buildListItem(fileRef.name, value!,downloadURL,context)));
-    //     });
-    //   }
-    // });
+    var filesList =
+        await FirebaseStorage.instance.ref(weTravelModel.userID).listAll();
+    FullMetadata metadata;
+    String downloadURL;
+    Uint8List previewImg;
+
+    for (var fileRef in filesList.items) {
+      if (fileRef.name == "profile_img") continue;
+      metadata = await fileRef.getMetadata();
+      downloadURL = await fileRef.getDownloadURL();
+      previewImg = (await VideoThumbnail.thumbnailData(
+          video: downloadURL, imageFormat: ImageFormat.JPEG, quality: 20))!;
+      userVideoTabModel.addVideoListItem(buildListItem(
+          fileRef.name,
+          metadata.customMetadata!["user_id"]!,
+          downloadURL,
+          metadata.customMetadata!["uploadingTime"]!,
+          metadata.customMetadata!["position"]!,
+          previewImg,
+          context));
+    }
   }
 
-  Widget buildListItem(String videoName, Uint8List img, String downloadURL, BuildContext context,) {
+  Widget buildListItem(
+    String videoName,
+    String uID,
+    String downloadURL,
+    String uploadingTime,
+    String position,
+    Uint8List img,
+    BuildContext context,
+  ) {
     return Card(
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context,AvailableRoutes().videoScreen,arguments: VideoArguments(videoName,img, weTravelModel.userID!,downloadURL));
+          Navigator.pushNamed(context, AvailableRoutes().videoScreen,
+              arguments: Video(
+                  videoName, img, uID, downloadURL, uploadingTime, position));
         },
         child: Row(
           children: [

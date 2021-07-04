@@ -1,39 +1,43 @@
-
-import 'package:flick_video_player/flick_video_player.dart';
+import 'package:chewie/chewie.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:we_travel/model/WeTravelModel.dart';
 
 final VideoScreenModel videoScreenModel = VideoScreenModel(weTravelModel);
 
-class VideoScreenModel extends Model{
-
-  VideoPlayerController? _videoPlayerController;
-  FlickManager? _flickManager;
-
-  FlickManager initFlickManager(String url) {
-    if(_videoPlayerController != null){
-      _videoPlayerController = null;
-    }
-    if(_flickManager != null){
-      _flickManager = null;
-    }
-    _videoPlayerController = VideoPlayerController.network(url);
-    _flickManager = FlickManager(videoPlayerController: _videoPlayerController!);
-    return _flickManager!;
-  }
-
-  void makeNullVideoControllerFlickerManager() async {
-    //TODO it is not OK. Think about normal dispose
-    await _flickManager!.flickControlManager!.mute();
-    // await _videoPlayerController!.dispose();
-    // _flickManager = null;
-    // _videoPlayerController = null;
-  }
-
-
+class VideoScreenModel extends Model {
+  VideoScreenModel(this.weTravelModel);
 
   WeTravelModel weTravelModel;
 
-  VideoScreenModel(this.weTravelModel);
+  VideoPlayerController? _videoPlayerController;
+
+  VideoPlayerController? get videoPlayerController => _videoPlayerController;
+
+  ChewieController? _chewieController;
+
+  ChewieController? get chewieController => _chewieController;
+
+  bool isPlayerInitFinished = false;
+
+  void initChewieController(String url) async {
+    isPlayerInitFinished = false;
+    _videoPlayerController = VideoPlayerController.network(url);
+    await _videoPlayerController!.initialize().then((value) {
+      isPlayerInitFinished = true;
+      notifyListeners();
+    });
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController!,
+      autoPlay: true,
+    );
+  }
+
+  //TODO don't think it's right, but it works. Try to fix it
+  Future dismissChewie() async {
+    await _videoPlayerController!.pause();
+    // await _videoPlayerController!.dispose();
+    // _chewieController!.dispose();
+    notifyListeners();
+  }
 }
